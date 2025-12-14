@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using TodoServerApp.Components;
 using TodoServerApp.Components.Account;
 using TodoServerApp.Data;
+using TodoServerApp.Data.interfaces;
+using TodoServerApp.Data.Services;
 
 namespace TodoServerApp
 {
@@ -40,6 +42,7 @@ namespace TodoServerApp
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddScoped<IDataService, MSSQLDataService>();
 
             var app = builder.Build();
 
@@ -51,7 +54,6 @@ namespace TodoServerApp
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
